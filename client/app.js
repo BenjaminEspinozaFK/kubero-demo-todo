@@ -1,8 +1,4 @@
-// IMPORTANTE para la demo: reemplazar esto por la URL real del backend
-// despues de crear la App del server en Kubero (paso 5 del flujo), y hacer
-// git push de este unico cambio — ese push es el que van a ver
-// autodesplegarse solo.
-const API_URL = 'https://REEMPLAZAR-CON-TU-BACKEND.inf.uct.cl';
+const API_URL = 'https://server2.inf.uct.cl';
 
 const form = document.getElementById('task-form');
 const input = document.getElementById('task-input');
