@@ -4,12 +4,13 @@ const { Pool } = require('pg');
 
 const PORT = process.env.PORT || 3000;
 
-// node-postgres (pg) lee sola las variables estandar PGHOST/PGPORT/PGUSER/
-// PGPASSWORD/PGDATABASE, o DATABASE_URL si esta seteada. El Addon de Postgres
-// de Kubero deberia inyectar alguna de esas dos formas — al configurarlo en
-// vivo, revisen con que nombres quedan las variables de entorno de la app y
-// ajusten aca si hace falta (ej. agregar connectionString: process.env.DATABASE_URL).
-const pool = new Pool();
+// El Addon de Postgres de Kubero NO inyecta variables de entorno solo: hay
+// que crear manualmente una variable DATABASE_URL en la App, con el formato
+// que documenta Kubero: postgres://usuario:password@[nombre-app]-postgres:5432/base
+// Si no esta seteada, cae a las variables PG* (utiles para probar localmente).
+const pool = process.env.DATABASE_URL
+  ? new Pool({ connectionString: process.env.DATABASE_URL })
+  : new Pool();
 
 async function waitForDatabase(retries = 15, delayMs = 2000) {
   for (let i = 1; i <= retries; i++) {
